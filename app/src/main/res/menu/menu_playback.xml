@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <item
+        android:id="@+id/playback_action_help"
+        android:icon="@drawable/ic_action_help"
+        android:showAsAction="always"
+        android:title="@string/playback_action_help"
+        tools:ignore="AlwaysShowAction"/>
+    <item
+        android:id="@+id/playback_action_add"
+        android:showAsAction="withText|always"
+        android:title="@string/playback_action_add"/>
+    <item
+        android:id="@+id/playback_action_quit"
+        android:icon="@drawable/ic_lock_power_off"
+        android:showAsAction="always"
+        android:title="@string/playback_action_quit"/>
+
+</menu>
