@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -185,6 +186,10 @@ public class MainActivity extends Activity {
 
         //TODO 곡 카운트
         setCountText();
+
+        //TODO 고양이
+//        int screenWidth = Utils.getScreenWidthPixels(this);
+        initCatImageView(screenWidth);
     }
 
     @Override
@@ -656,5 +661,17 @@ public class MainActivity extends Activity {
             }
         }).start();
 
+    }
+
+    //TODO
+    private void initCatImageView(int screenWidth) {
+        int px = screenWidth / 2;
+
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(px, px);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+
+        ImageView imageView = (ImageView) findViewById(R.id.main_cats);
+        imageView.setLayoutParams(layoutParams);
     }
 }

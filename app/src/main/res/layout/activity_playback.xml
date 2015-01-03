@@ -17,7 +17,7 @@
             android:layout_alignParentRight="true"
             android:contentDescription="@string/main_main_image_cd"
             android:scaleType="centerCrop"
-            android:src="@drawable/cat" />
+            android:src="@drawable/cat_2" />
     </RelativeLayout>
 
     <ListView

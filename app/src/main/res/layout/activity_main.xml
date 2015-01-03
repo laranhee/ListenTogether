@@ -1,169 +1,192 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="withs.listentogether.activity.MainActivity"
-    tools:ignore="MergeRootFrame" >
+    tools:ignore="MergeRootFrame">
 
-    <FrameLayout
-        android:id="@+id/main_layout_frame"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:layout_height="match_parent" >
 
-        <ImageView
-            android:id="@+id/main_main_image"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:contentDescription="@string/playlist_albumart_cd"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.5"
-            android:background="#000000" />
-
-        <RelativeLayout
-            android:id="@+id/main_layout_top"
-            android:layout_width="match_parent"
-            android:layout_height="128dp" >
-            
-            <TextView
-                android:id="@+id/main_text_count"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="#FFFFFF"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/custom_margin" />
-
-            <TextView
-                android:id="@+id/main_text_hint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:text=""
-                android:textColor="#FFFFFF" />
-
-            <Button
-                android:id="@+id/main_button_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/main_text_hint"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/custom_margin"
-                android:background="@android:drawable/btn_default"
-                android:minWidth="64dp"
-                android:onClick="startPlaybackActivity"
-                android:text="@string/main_button_start"
-                android:textAppearance="?android:attr/textAppearanceSmallInverse" />
-        </RelativeLayout>
-    </FrameLayout>
-
-    <!-- 내 기기 라인 -->
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/custom_margin"
-        android:layout_marginStart="@dimen/custom_margin"
-        android:gravity="center_vertical"
-        android:text="@string/main_text_my_device" />
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/holo_blue_light"
-        android:gravity="center_vertical" />
-
-    <!-- Self information -->
+    <ImageView
+        android:id="@+id/main_cats"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/main_main_image_cd"
+        android:scaleType="centerCrop"
+        android:src="@drawable/cat_1" />
+    </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="?android:attr/listPreferredItemHeight"
-        android:background="?android:attr/activatedBackgroundIndicator"
-        android:padding="3dip" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/my_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_marginRight="2dp"
-            android:src="@drawable/single" />
+        <FrameLayout
+            android:id="@+id/main_layout_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/main_main_image"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:contentDescription="@string/playlist_albumart_cd"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.5"
+                android:background="#000000" />
+
+            <RelativeLayout
+                android:id="@+id/main_layout_top"
+                android:layout_width="match_parent"
+                android:layout_height="128dp">
+
+                <TextView
+                    android:id="@+id/main_text_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/custom_margin" />
+
+                <TextView
+                    android:id="@+id/main_text_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/main_button_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/main_text_hint"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/custom_margin"
+                    android:background="@android:drawable/btn_default"
+                    android:minWidth="64dp"
+                    android:onClick="startPlaybackActivity"
+                    android:text="@string/main_button_start"
+                    android:textAppearance="?android:attr/textAppearanceSmallInverse" />
+            </RelativeLayout>
+        </FrameLayout>
+
+        <!-- 내 기기 라인 -->
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/custom_margin"
+            android:layout_marginStart="@dimen/custom_margin"
+            android:gravity="center_vertical"
+            android:text="@string/main_text_my_device" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/holo_blue_light"
+            android:gravity="center_vertical" />
+
+        <!-- Self information -->
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:orientation="vertical" >
+            android:layout_width="fill_parent"
+            android:layout_height="?android:attr/listPreferredItemHeight"
+            android:background="?android:attr/activatedBackgroundIndicator"
+            android:padding="3dip">
 
-            <TextView
-                android:id="@+id/my_name"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical" />
+            <ImageView
+                android:id="@+id/my_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/single" />
 
-            <TextView
-                android:id="@+id/my_status"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:ellipsize="marquee"
-                android:singleLine="true" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/my_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/my_status"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:singleLine="true" />
+            </LinearLayout>
         </LinearLayout>
+
+        <!-- 연결 된 기기 라인 -->
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/custom_margin"
+            android:layout_marginStart="@dimen/custom_margin"
+            android:gravity="center_vertical"
+            android:text="@string/main_text_connected_device" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/holo_blue_light"
+            android:gravity="center_vertical" />
+
+        <!-- Connected peers -->
+
+        <ListView
+            android:id="@+id/connectedlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="false" />
+
+        <!-- 연결 가능한 기기 -->
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/main_text_abailable_device"
+            android:layout_marginLeft="@dimen/custom_margin"
+            android:layout_marginStart="@dimen/custom_margin" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/holo_blue_light"
+            android:gravity="center_vertical" />
+
+        <!-- Available peers -->
+
+        <ListView
+            android:id="@+id/peerlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="false" />
+
     </LinearLayout>
 
-    <!-- 연결 된 기기 라인 -->
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/custom_margin"
-        android:layout_marginStart="@dimen/custom_margin"
-        android:gravity="center_vertical"
-        android:text="@string/main_text_connected_device" />
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/holo_blue_light"
-        android:gravity="center_vertical" />
-
-    <!-- Connected peers -->
-
-    <ListView
-        android:id="@+id/connectedlist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawSelectorOnTop="false" />
-
-    <!-- 연결 가능한 기기 -->
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="@string/main_text_abailable_device" 
-        android:layout_marginLeft="@dimen/custom_margin"
-        android:layout_marginStart="@dimen/custom_margin" />
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/holo_blue_light"
-        android:gravity="center_vertical" />
-
-    <!-- Available peers -->
-
-    <ListView
-        android:id="@+id/peerlist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawSelectorOnTop="false" />
-
-</LinearLayout>
+</FrameLayout>
