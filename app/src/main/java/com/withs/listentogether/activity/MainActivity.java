@@ -672,6 +672,7 @@ public class MainActivity extends Activity {
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 
         ImageView imageView = (ImageView) findViewById(R.id.main_cats);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         imageView.setLayoutParams(layoutParams);
     }
 }
