@@ -10,6 +10,7 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.widget.ImageView;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -116,5 +117,17 @@ public class Utils {
 		activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		return metrics.widthPixels;
 	}
+
+    public static void setSingleIcon(ImageView imageView) {
+        int flag = (int) (Math.random() * 2);
+        switch (flag) {
+            case 0:
+                imageView.setImageResource(R.drawable.single1);
+                break;
+            case 1:
+                imageView.setImageResource(R.drawable.single2);
+                break;
+        }
+    }
 
 }

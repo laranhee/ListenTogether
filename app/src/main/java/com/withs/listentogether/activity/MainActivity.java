@@ -293,9 +293,10 @@ public class MainActivity extends Activity {
                 imageView.setImageResource(R.drawable.connected);
 
             } else {
-
+                //TODO 싱글아이콘 변경
                 ImageView imageView = (ImageView) findViewById(R.id.my_icon);
-                imageView.setImageResource(R.drawable.single);
+                Utils.setSingleIcon(imageView);
+//                imageView.setImageResource(R.drawable.single);
 
             }
 
