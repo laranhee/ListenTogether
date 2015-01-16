@@ -47,7 +47,8 @@ public class WiFiPeerListAdapter extends ArrayAdapter<WifiP2pDevice> {
 			}
             //TODO single icon 변경
             if (icon != null) {
-                Utils.setSingleIcon(icon);
+//                Utils.setSingleIcon(icon);
+                icon.setImageResource(R.drawable.single2);
             }
 		}
 

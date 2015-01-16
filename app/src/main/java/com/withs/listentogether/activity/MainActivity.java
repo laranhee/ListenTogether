@@ -295,7 +295,8 @@ public class MainActivity extends Activity {
             } else {
                 //TODO 싱글아이콘 변경
                 ImageView imageView = (ImageView) findViewById(R.id.my_icon);
-                Utils.setSingleIcon(imageView);
+                imageView.setImageResource(R.drawable.single1);
+//                Utils.setSingleIcon(imageView);
 //                imageView.setImageResource(R.drawable.single);
 
             }
