@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
+import android.net.wifi.p2p.WifiP2pGroup;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
@@ -15,7 +16,7 @@ import com.withs.listentogether.activity.MainActivity;
 
 public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
-	// private static final String TAG = "WiFiDirectBroadcastReceiver";
+	private static final String TAG = "WiFiDirectBroadcastReceiver";
 
 	private WifiP2pManager mManager;
 	private Channel mChannel;
@@ -35,45 +36,43 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 		String action = intent.getAction();
 
 		if (WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION.equals(action)) {
-
 			int state = intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE, -1);
-
 			if (state == WifiP2pManager.WIFI_P2P_STATE_DISABLED) {
 				mActivity.showWiFiP2pDialog();
 			}
-
 		} else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
-
-			if (mManager != null) {
-
 				mManager.requestPeers(mChannel,
 						new WifiP2pManager.PeerListListener() {
-
 							@Override
 							public void onPeersAvailable(
 									WifiP2pDeviceList peerList) {
 								mActivity.setPeerList(peerList);
 							}
-
 						});
-
-			}
-
 		} else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION
 				.equals(action)) {
+            //TODO
+            mManager.requestGroupInfo(mChannel, new WifiP2pManager.GroupInfoListener() {
+                @Override
+                public void onGroupInfoAvailable(WifiP2pGroup group) {
+                    if (group != null) {
+                        WifiP2pGroup test = group;
+                        WifiP2pDevice device = test.getOwner();
+
+                        int a = 2;
+                    }
+                }
+            });
+
 
 			mManager.requestConnectionInfo(mChannel,
 					new WifiP2pManager.ConnectionInfoListener() {
 
 						@Override
 						public void onConnectionInfoAvailable(WifiP2pInfo info) {
-
-							//TODO
-//							mActivity.mInfo = info;
 							mActivity.setWiFiP2pInfo(info);
 
 							if (info.groupFormed && info.isGroupOwner) {
-
 								mActivity.setIsGroupOwner(true);
 
 								if (mActivity.serverThread == null) {
@@ -87,7 +86,6 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 								mActivity.setHint(R.string.main_hint_grouped);
 
 							} else if (info.groupFormed) {
-
 								if (mActivity.clientThread == null) {
 									mActivity.startClientThread();
 								}
@@ -99,7 +97,6 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 								mActivity.setHint(R.string.main_hint_grouped);
 
 							} else if (info.groupFormed == false) {
-
 								mActivity.setIsGroupOwner(false);
 
 								if (mActivity.serverThread != null) {
@@ -128,16 +125,10 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
 		} else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION
 				.equals(action)) {
-
 			WifiP2pDevice mMyDevice = (WifiP2pDevice) intent
 					.getParcelableExtra(WifiP2pManager.EXTRA_WIFI_P2P_DEVICE);
-
-			//TODO
 			mActivity.setMyWiFiP2pDevice(mMyDevice);
-//			mActivity.mMyWifiP2pDevice = mMyDevice;
-
 			mActivity.setMyDeviceStatus(mMyDevice);
-
 		}
 
 	}

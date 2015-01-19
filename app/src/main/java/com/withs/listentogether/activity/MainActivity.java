@@ -265,8 +265,8 @@ public class MainActivity extends Activity {
         sendStartMessage();
     }
 
-    public void setIsGroupOwner(boolean b) {
-        isGroupOwner = b;
+    public void setIsGroupOwner(boolean groupOwner) {
+        isGroupOwner = groupOwner;
     }
 
     public void setWiFiP2pInfo(WifiP2pInfo info) {
@@ -278,9 +278,7 @@ public class MainActivity extends Activity {
     }
 
     public void setMyDeviceStatus(WifiP2pDevice myDevice) {
-
         if (myDevice != null) {
-
             // 내 기기가 그룹오너면 아이콘 변경
             if (isGroupOwner == true) {
 
@@ -296,9 +294,6 @@ public class MainActivity extends Activity {
                 //TODO 싱글아이콘 변경
                 ImageView imageView = (ImageView) findViewById(R.id.my_icon);
                 imageView.setImageResource(R.drawable.single1);
-//                Utils.setSingleIcon(imageView);
-//                imageView.setImageResource(R.drawable.single);
-
             }
 
             TextView textView = (TextView) findViewById(R.id.my_name);
