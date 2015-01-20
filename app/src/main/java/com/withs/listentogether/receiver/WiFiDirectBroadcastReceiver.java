@@ -41,18 +41,20 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 				mActivity.showWiFiP2pDialog();
 			}
 		} else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
-				mManager.requestPeers(mChannel,
-						new WifiP2pManager.PeerListListener() {
-							@Override
-							public void onPeersAvailable(
-									WifiP2pDeviceList peerList) {
-								mActivity.setPeerList(peerList);
-							}
-						});
+            mManager.requestPeers(mChannel, mActivity);
+            //TODO
+//				mManager.requestPeers(mChannel,
+//						new WifiP2pManager.PeerListListener() {
+//							@Override
+//							public void onPeersAvailable(
+//									WifiP2pDeviceList peerList) {
+//								mActivity.setPeerList(peerList);
+//							}
+//						});
 		} else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION
 				.equals(action)) {
             //TODO
-            mManager.requestGroupInfo(mChannel, new WifiP2pManager.GroupInfoListener() {
+            /*mManager.requestGroupInfo(mChannel, new WifiP2pManager.GroupInfoListener() {
                 @Override
                 public void onGroupInfoAvailable(WifiP2pGroup group) {
                     if (group != null) {
@@ -62,10 +64,18 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
                         int a = 2;
                     }
                 }
-            });
+            });*/
+
+            //TODO
+//            mManager.requestConnectionInfo(mChannel, mActivity);
+
+            //TODO
+            WifiP2pInfo info = intent.getParcelableExtra(WifiP2pManager.EXTRA_WIFI_P2P_INFO);
+            testInfo(info);
+            intent.getParcelableExtra(WifiP2pManager.EXTRA_P2P_DEVICE_LIST);
 
 
-			mManager.requestConnectionInfo(mChannel,
+			/*mManager.requestConnectionInfo(mChannel,
 					new WifiP2pManager.ConnectionInfoListener() {
 
 						@Override
@@ -121,7 +131,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
 						}
 
-					});
+					});*/
 
 		} else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION
 				.equals(action)) {
@@ -132,5 +142,56 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 		}
 
 	}
+
+    private void testInfo(WifiP2pInfo info) {
+        mActivity.setWiFiP2pInfo(info);
+
+        if (info.groupFormed && info.isGroupOwner) {
+            mActivity.setIsGroupOwner(true);
+
+            if (mActivity.serverThread == null) {
+                mActivity.startServerThread();
+            }
+
+            Toast.makeText(mActivity,
+                    R.string.main_toast_group_owner,
+                    Toast.LENGTH_SHORT).show();
+
+            mActivity.setHint(R.string.main_hint_grouped);
+
+        } else if (info.groupFormed) {
+            if (mActivity.clientThread == null) {
+                mActivity.startClientThread();
+            }
+
+            Toast.makeText(mActivity,
+                    R.string.main_toast_group_member,
+                    Toast.LENGTH_SHORT).show();
+
+            mActivity.setHint(R.string.main_hint_grouped);
+
+        } else if (info.groupFormed == false) {
+            mActivity.setIsGroupOwner(false);
+
+            if (mActivity.serverThread != null) {
+                mActivity.serverThread.interrupt();
+                mActivity.serverThread = null;
+            }
+
+            if (mActivity.clientThread != null) {
+                mActivity.clientThread.interrupt();
+                mActivity.clientThread = null;
+            }
+
+            mActivity.instructionSocket.close();
+
+            mActivity.invalidateOptionsMenu();
+
+            mActivity.setHint(R.string.main_hint_start);
+
+        }
+
+        mActivity.setGroupStatus();
+    }
 
 }

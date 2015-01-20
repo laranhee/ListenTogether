@@ -49,7 +49,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements WifiP2pManager.PeerListListener, WifiP2pManager.ConnectionInfoListener {
 
     // private static final String TAG = "MainActivity";
 
@@ -521,6 +521,63 @@ public class MainActivity extends Activity {
     public void startClientThread() {
         clientThread = new Thread(new ClientThread());
         clientThread.start();
+    }
+
+    @Override
+    public void onPeersAvailable(WifiP2pDeviceList peers) {
+        setPeerList(peers);
+    }
+
+    @Override
+    public void onConnectionInfoAvailable(WifiP2pInfo info) {
+        setWiFiP2pInfo(info);
+
+        if (info.groupFormed && info.isGroupOwner) {
+            setIsGroupOwner(true);
+
+            if (serverThread == null) {
+                startServerThread();
+            }
+
+            Toast.makeText(this,
+                    R.string.main_toast_group_owner,
+                    Toast.LENGTH_SHORT).show();
+
+            setHint(R.string.main_hint_grouped);
+
+        } else if (info.groupFormed) {
+            if (clientThread == null) {
+                startClientThread();
+            }
+
+            Toast.makeText(this,
+                    R.string.main_toast_group_member,
+                    Toast.LENGTH_SHORT).show();
+
+            setHint(R.string.main_hint_grouped);
+
+        } else if (info.groupFormed == false) {
+            setIsGroupOwner(false);
+
+            if (serverThread != null) {
+                serverThread.interrupt();
+                serverThread = null;
+            }
+
+            if (clientThread != null) {
+                clientThread.interrupt();
+                clientThread = null;
+            }
+
+            instructionSocket.close();
+
+            invalidateOptionsMenu();
+
+            setHint(R.string.main_hint_start);
+
+        }
+
+        setGroupStatus();
     }
 
     private class ServerThread implements Runnable {
