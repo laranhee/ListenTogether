@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.p2p.WifiP2pDevice;
-import android.net.wifi.p2p.WifiP2pDeviceList;
-import android.net.wifi.p2p.WifiP2pGroup;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
@@ -93,7 +91,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 										R.string.main_toast_group_owner,
 										Toast.LENGTH_SHORT).show();
 
-								mActivity.setHint(R.string.main_hint_grouped);
+								mActivity.setHintText(R.string.main_hint_grouped);
 
 							} else if (info.groupFormed) {
 								if (mActivity.clientThread == null) {
@@ -104,7 +102,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 										R.string.main_toast_group_member,
 										Toast.LENGTH_SHORT).show();
 
-								mActivity.setHint(R.string.main_hint_grouped);
+								mActivity.setHintText(R.string.main_hint_grouped);
 
 							} else if (info.groupFormed == false) {
 								mActivity.setIsGroupOwner(false);
@@ -123,7 +121,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
 								mActivity.invalidateOptionsMenu();
 
-								mActivity.setHint(R.string.main_hint_start);
+								mActivity.setHintText(R.string.main_hint_start);
 
 							}
 
@@ -157,7 +155,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
                     R.string.main_toast_group_owner,
                     Toast.LENGTH_SHORT).show();
 
-            mActivity.setHint(R.string.main_hint_grouped);
+            mActivity.setHintText(R.string.main_hint_grouped);
 
         } else if (info.groupFormed) {
             if (mActivity.clientThread == null) {
@@ -168,7 +166,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
                     R.string.main_toast_group_member,
                     Toast.LENGTH_SHORT).show();
 
-            mActivity.setHint(R.string.main_hint_grouped);
+            mActivity.setHintText(R.string.main_hint_grouped);
 
         } else if (info.groupFormed == false) {
             mActivity.setIsGroupOwner(false);
@@ -187,7 +185,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
             mActivity.invalidateOptionsMenu();
 
-            mActivity.setHint(R.string.main_hint_start);
+            mActivity.setHintText(R.string.main_hint_start);
 
         }
 

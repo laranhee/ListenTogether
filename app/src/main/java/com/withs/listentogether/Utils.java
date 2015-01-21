@@ -1,6 +1,7 @@
 package com.withs.listentogether;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.ActionListener;
@@ -11,6 +12,7 @@ import android.os.RemoteException;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -49,19 +51,15 @@ public class Utils {
 
 	public static void clearWiFiP2p(WifiP2pManager manager, Channel channel) {
 		ActionListener actionListener = new ActionListener() {
-
 			@Override
 			public void onSuccess() {
 				// success
 			}
-
 			@Override
 			public void onFailure(int reason) {
 				Log.d("clearWiFiP2p", "error : " + reason);
 			}
-
 		};
-
 		manager.cancelConnect(channel, actionListener);
 		manager.removeGroup(channel, actionListener);
 	}
@@ -117,4 +115,12 @@ public class Utils {
 		activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		return metrics.widthPixels;
 	}
+
+    public static void showShortToast(Context context, CharSequence text) {
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void showShortToast(Context context, int resId) {
+        Toast.makeText(context, resId, Toast.LENGTH_SHORT).show();
+    }
 }

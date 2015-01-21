@@ -28,7 +28,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.withs.listentogether.InstructionSocket;
 import com.withs.listentogether.PlaylistSocket;
@@ -51,7 +50,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity implements WifiP2pManager.PeerListListener, WifiP2pManager.ConnectionInfoListener {
 
-    // private static final String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
 
     // 명령소켓
     public InstructionSocket instructionSocket = InstructionSocket
@@ -98,9 +97,6 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // hint 텍스트뷰 초기화
-        mHintTextView = (TextView) findViewById(R.id.main_text_hint);
-
         // 와이파이 다이렉트 초기화
         mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         mChannel = mManager.initialize(this, getMainLooper(), null);
@@ -146,21 +142,15 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
 
                 // 와이파이다이렉트 연결 시도
                 mManager.connect(mChannel, config, new WifiP2pManager.ActionListener() {
-
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(MainActivity.this,
-                                R.string.main_toast_requesting,
-                                Toast.LENGTH_SHORT).show();
+                        Utils.showShortToast(MainActivity.this, R.string.main_toast_requesting);
                     }
-
                     @Override
                     public void onFailure(int reason) {
                         setFailureReasonForConnect(reason);
                     }
-
                 });
-
             }
 
         });
@@ -173,10 +163,6 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
 
         ImageView imageMain = (ImageView) findViewById(R.id.main_main_image);
         imageMain.setLayoutParams(new FrameLayout.LayoutParams(match_parent, px));
-
-//		//TODO
-//		// 힌트 사이즈 조절
-//		mHintTextView.setLayoutParams(new LayoutParams(match_parent, px));
 
         //TODO
         // 버튼 위치 조절
@@ -261,7 +247,6 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
 
     //TODO 재생액티비티 넘어가기
     public void startPlaybackActivity(View view) {
-//		Toast.makeText(this, "hehe", Toast.LENGTH_LONG).show();
         sendStartMessage();
     }
 
@@ -372,52 +357,34 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
     }
 
     private void setFailureReasonForConnect(int reason) {
-
         switch (reason) {
             case WifiP2pManager.BUSY:
-                Toast.makeText(MainActivity.this,
-                        R.string.main_failure_reason_busy, Toast.LENGTH_SHORT)
-                        .show();
+                Utils.showShortToast(MainActivity.this, R.string.main_failure_reason_busy);
                 break;
             case WifiP2pManager.ERROR:
-                Toast.makeText(MainActivity.this,
-                        R.string.main_failure_reason_error, Toast.LENGTH_SHORT)
-                        .show();
+                Utils.showShortToast(MainActivity.this, R.string.main_failure_reason_error);
                 break;
             case WifiP2pManager.P2P_UNSUPPORTED:
-                Toast.makeText(MainActivity.this,
-                        R.string.main_failure_reason_p2p_unsupported,
-                        Toast.LENGTH_SHORT).show();
-                break;
-            default:
+                Utils.showShortToast(MainActivity.this, R.string.main_failure_reason_p2p_unsupported);
                 break;
         }
-
     }
 
     private void setFailureReasonForDiscover(int reason) {
-
         switch (reason) {
             case WifiP2pManager.BUSY:
                 showWiFiP2pDialog();
                 break;
             case WifiP2pManager.ERROR:
-                Toast.makeText(MainActivity.this,
-                        R.string.main_failure_reason_error, Toast.LENGTH_SHORT)
-                        .show();
+                Utils.showShortToast(MainActivity.this, R.string.main_failure_reason_error);
                 break;
             case WifiP2pManager.P2P_UNSUPPORTED:
-                Toast.makeText(MainActivity.this,
-                        R.string.main_failure_reason_p2p_unsupported,
-                        Toast.LENGTH_SHORT).show();
-                break;
-            default:
+                Utils.showShortToast(MainActivity.this, R.string.main_failure_reason_p2p_unsupported);
                 break;
         }
-
     }
 
-    public void setHint(int id) {
+    public void setHintText(int id) {
         if (mHintTextView == null) {
             mHintTextView = (TextView) findViewById(R.id.main_text_hint);
         }
@@ -471,9 +438,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
 
             @Override
             public void onSuccess() {
-                Toast.makeText(getApplicationContext(),
-                        R.string.main_toast_searching, Toast.LENGTH_SHORT)
-                        .show();
+                Utils.showShortToast(MainActivity.this, R.string.main_toast_searching);
             }
 
             @Override
@@ -490,7 +455,9 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
         startActivity(intent);
     }
 
-    /** 재생액티비티 시작 메소드 */
+    /**
+     * 재생액티비티 시작 메소드
+     */
     private void sendStartMessage() {
 
         if (isGroupOwner == false) {
@@ -539,22 +506,18 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
                 startServerThread();
             }
 
-            Toast.makeText(this,
-                    R.string.main_toast_group_owner,
-                    Toast.LENGTH_SHORT).show();
+            Utils.showShortToast(MainActivity.this, R.string.main_toast_group_owner);
 
-            setHint(R.string.main_hint_grouped);
+            setHintText(R.string.main_hint_grouped);
 
         } else if (info.groupFormed) {
             if (clientThread == null) {
                 startClientThread();
             }
 
-            Toast.makeText(this,
-                    R.string.main_toast_group_member,
-                    Toast.LENGTH_SHORT).show();
+            Utils.showShortToast(MainActivity.this, R.string.main_toast_group_member);
 
-            setHint(R.string.main_hint_grouped);
+            setHintText(R.string.main_hint_grouped);
 
         } else if (info.groupFormed == false) {
             setIsGroupOwner(false);
@@ -573,7 +536,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
 
             invalidateOptionsMenu();
 
-            setHint(R.string.main_hint_start);
+            setHintText(R.string.main_hint_start);
 
         }
 
@@ -611,11 +574,9 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
                 @Override
                 public void run() {
 
-                    Toast.makeText(getApplicationContext(),
-                            R.string.main_toast_connected_server,
-                            Toast.LENGTH_SHORT).show();
+                    Utils.showShortToast(MainActivity.this, R.string.main_toast_connected_server);
 
-                    setHint(R.string.main_hint_connected_server);
+                    setHintText(R.string.main_hint_connected_server);
 
                     invalidateOptionsMenu();
 
@@ -642,11 +603,9 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
                 @Override
                 public void run() {
 
-                    Toast.makeText(getApplicationContext(),
-                            R.string.main_toast_connected_client,
-                            Toast.LENGTH_SHORT).show();
+                    Utils.showShortToast(MainActivity.this, R.string.main_toast_connected_client);
 
-                    setHint(R.string.main_hint_connected_client);
+                    setHintText(R.string.main_hint_connected_client);
 
                 }
 
