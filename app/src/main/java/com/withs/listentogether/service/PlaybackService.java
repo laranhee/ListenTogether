@@ -30,7 +30,7 @@ import com.withs.listentogether.MusicInfo;
 import com.withs.listentogether.Playlist;
 import com.withs.listentogether.PlaylistSocket;
 import com.withs.listentogether.R;
-import com.withs.listentogether.Utils;
+import com.withs.listentogether.MyUtil;
 import com.withs.listentogether.activity.PlaybackActivity;
 
 import java.io.BufferedInputStream;
@@ -184,7 +184,7 @@ public class PlaybackService extends Service {
 
 				mp.reset();
 
-				Utils.sendMessage(mReplyTo,
+				MyUtil.sendMessage(mReplyTo,
                         PlaybackActivity.MSG_PLAYLIST_CHANGED);
 
 				updateNotificationContentInfo();
@@ -221,7 +221,7 @@ public class PlaybackService extends Service {
 		mInstructionSocket.close();
 		mPlaylistSocket.close();
 
-		Utils.clearWiFiP2p(mManager, mChannel);
+		MyUtil.clearWifiP2pConnection(mManager, mChannel);
 
 		stopForeground(true);
 		mNotificationManager.cancel(NOTIFICATION_ID);
@@ -250,7 +250,7 @@ public class PlaybackService extends Service {
 
 			try {
 				mPlaylistSocket.addSocket(
-						Utils.initSocket(serverSocket.accept()),
+						MyUtil.initSocket(serverSocket.accept()),
 						PlaylistSocket.SERVER);
 				serverSocket.close();
 			} catch (IOException e) {
@@ -271,8 +271,8 @@ public class PlaybackService extends Service {
 		@Override
 		public void run() {
 
-			Socket socket = Utils.makeConnectedSocket(
-					mInfo.groupOwnerAddress.getHostAddress(), 8930);
+			Socket socket = MyUtil.makeConnectedSocket(
+                    mInfo.groupOwnerAddress.getHostAddress(), 8930);
 
 			mPlaylistSocket.addSocket(socket, PlaylistSocket.CLIENT);
 
@@ -375,7 +375,7 @@ public class PlaybackService extends Service {
 
 			ServerSocket serverSocket = new ServerSocket(8940);
 			serverSocket.setReuseAddress(true);
-			Socket socket = Utils.initSocket(serverSocket.accept());
+			Socket socket = MyUtil.initSocket(serverSocket.accept());
 			serverSocket.close();
 
 			long length = file.length();
@@ -420,8 +420,8 @@ public class PlaybackService extends Service {
 			}
 			tempFile.createNewFile();
 
-			Socket socket = Utils.makeConnectedSocket(
-					mListMusicInfo.get(0).mOwnerAddress, 8940);
+			Socket socket = MyUtil.makeConnectedSocket(
+                    mListMusicInfo.get(0).mOwnerAddress, 8940);
 
 			long length = new DataInputStream(socket.getInputStream())
 					.readLong();
@@ -494,7 +494,7 @@ public class PlaybackService extends Service {
 
 		mListMusicInfo.add(musicInfo);
 
-		Utils.sendMessage(mReplyTo, PlaybackActivity.MSG_PLAYLIST_CHANGED);
+		MyUtil.sendMessage(mReplyTo, PlaybackActivity.MSG_PLAYLIST_CHANGED);
 
 		updateNotificationContentInfo();
 
@@ -517,7 +517,7 @@ public class PlaybackService extends Service {
 				}
 
 				if (instruction.equals("quit")) {
-					Utils.sendMessage(mReplyTo, PlaybackActivity.MSG_QUIT);
+					MyUtil.sendMessage(mReplyTo, PlaybackActivity.MSG_QUIT);
 				}
 			}
 

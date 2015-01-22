@@ -18,7 +18,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:contentDescription="@string/main_main_image_cd"
-        android:scaleType="centerCrop"
+        android:scaleType="centerInside"
         android:src="@drawable/cat_1" />
     </RelativeLayout>
 

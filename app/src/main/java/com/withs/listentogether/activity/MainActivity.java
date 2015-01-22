@@ -30,9 +30,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.withs.listentogether.InstructionSocket;
+import com.withs.listentogether.MyUtil;
 import com.withs.listentogether.PlaylistSocket;
 import com.withs.listentogether.R;
-import com.withs.listentogether.Utils;
 import com.withs.listentogether.adapter.WiFiGroupListAdapter;
 import com.withs.listentogether.adapter.WiFiPeerListAdapter;
 import com.withs.listentogether.receiver.WiFiDirectBroadcastReceiver;
@@ -47,7 +47,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-
+//TODO 쓰레드 관련 리팩토링 필요
+//TODO onCreate() 리팩토링 필요
+//TODO 리스트뷰 및 리스트어댑터 리팩토링 필요
 public class MainActivity extends Activity implements WifiP2pManager.PeerListListener, WifiP2pManager.ConnectionInfoListener {
 
     private static final String TAG = "MainActivity";
@@ -105,7 +107,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
         // 이전 연결을 없앤다
         instructionSocket.close();
         PlaylistSocket.getInstance().close();
-        Utils.clearWiFiP2p(mManager, mChannel);
+        MyUtil.clearWifiP2pConnection(mManager, mChannel);
 
         // 인텐트필터 초기화
         mIntentFilter = new IntentFilter();
@@ -144,7 +146,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
                 mManager.connect(mChannel, config, new WifiP2pManager.ActionListener() {
                     @Override
                     public void onSuccess() {
-                        Utils.showShortToast(MainActivity.this, R.string.main_toast_requesting);
+                        MyUtil.showShortToast(MainActivity.this, R.string.main_toast_requesting);
                     }
                     @Override
                     public void onFailure(int reason) {
@@ -155,27 +157,10 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
 
         });
 
-        //TODO
-        // 메인이미지 조절
-        int screenWidth = Utils.getScreenWidthPixels(this);
-        int px = screenWidth * 8 / 16;
-        int match_parent = android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-
-        ImageView imageMain = (ImageView) findViewById(R.id.main_main_image);
-        imageMain.setLayoutParams(new FrameLayout.LayoutParams(match_parent, px));
-
-        //TODO
-        // 버튼 위치 조절
-        ViewGroup buttonLayout = (ViewGroup) findViewById(R.id.main_layout_top);
-        buttonLayout.setLayoutParams(new FrameLayout.LayoutParams(match_parent, px));
-//		initCatImageView(screenWidth);
+        initUI();
 
         //TODO 곡 카운트
         setCountText();
-
-        //TODO 고양이
-//        int screenWidth = Utils.getScreenWidthPixels(this);
-        initCatImageView(screenWidth);
     }
 
     @Override
@@ -194,7 +179,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
     protected void onDestroy() {
         super.onDestroy();
         instructionSocket.close();
-        Utils.clearWiFiP2p(mManager, mChannel);
+        MyUtil.clearWifiP2pConnection(mManager, mChannel);
     }
 
     @Override
@@ -245,6 +230,24 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
         return super.onPrepareOptionsMenu(menu);
     }
 
+    //TODO UI초기화 메소드
+    private void initUI() {
+        int screenWidth = MyUtil.getScreenWidthPixels(this);
+        int halfWidth = screenWidth * 8 / 16;
+
+        //가운데 이미지 및 힌트의 세로를 화면 가로크기의 반으로
+        ViewGroup.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, halfWidth);
+        findViewById(R.id.main_main_image).setLayoutParams(layoutParams);
+        findViewById(R.id.main_layout_top).setLayoutParams(layoutParams);
+
+        // 걸어가는 고양이의 크기를 가로크기의 반으로
+        RelativeLayout.LayoutParams layoutParams2 = new RelativeLayout.LayoutParams(halfWidth, halfWidth);
+        layoutParams2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        layoutParams2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        layoutParams2.addRule(RelativeLayout.ALIGN_PARENT_END);
+        findViewById(R.id.main_cats).setLayoutParams(layoutParams2);
+    }
+
     //TODO 재생액티비티 넘어가기
     public void startPlaybackActivity(View view) {
         sendStartMessage();
@@ -286,7 +289,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
 
             textView = (TextView) findViewById(R.id.my_status);
 
-            String status = Utils.getDeviceStatus(myDevice.status);
+            String status = MyUtil.getDeviceStatus(myDevice.status);
             textView.setText(status);
 
         }
@@ -359,13 +362,13 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
     private void setFailureReasonForConnect(int reason) {
         switch (reason) {
             case WifiP2pManager.BUSY:
-                Utils.showShortToast(MainActivity.this, R.string.main_failure_reason_busy);
+                MyUtil.showShortToast(MainActivity.this, R.string.main_failure_reason_busy);
                 break;
             case WifiP2pManager.ERROR:
-                Utils.showShortToast(MainActivity.this, R.string.main_failure_reason_error);
+                MyUtil.showShortToast(MainActivity.this, R.string.main_failure_reason_error);
                 break;
             case WifiP2pManager.P2P_UNSUPPORTED:
-                Utils.showShortToast(MainActivity.this, R.string.main_failure_reason_p2p_unsupported);
+                MyUtil.showShortToast(MainActivity.this, R.string.main_failure_reason_p2p_unsupported);
                 break;
         }
     }
@@ -373,13 +376,13 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
     private void setFailureReasonForDiscover(int reason) {
         switch (reason) {
             case WifiP2pManager.BUSY:
-                showWiFiP2pDialog();
+                showWifiP2pDialog();
                 break;
             case WifiP2pManager.ERROR:
-                Utils.showShortToast(MainActivity.this, R.string.main_failure_reason_error);
+                MyUtil.showShortToast(MainActivity.this, R.string.main_failure_reason_error);
                 break;
             case WifiP2pManager.P2P_UNSUPPORTED:
-                Utils.showShortToast(MainActivity.this, R.string.main_failure_reason_p2p_unsupported);
+                MyUtil.showShortToast(MainActivity.this, R.string.main_failure_reason_p2p_unsupported);
                 break;
         }
     }
@@ -391,10 +394,8 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
         mHintTextView.setText(id);
     }
 
-    public void showWiFiP2pDialog() {
-
+    public void showWifiP2pDialog() {
         if (mBuilder == null) {
-
             DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
 
                 @Override
@@ -412,7 +413,6 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
                             break;
                     }
                 }
-
             };
 
             mBuilder = new AlertDialog.Builder(this)
@@ -425,29 +425,24 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
                             onClickListener)
                     .setNegativeButton(R.string.main_dialog_negative,
                             onClickListener);
-
         }
 
         mBuilder.show();
-
     }
 
     private void discoverPeers() {
-
         mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
 
             @Override
             public void onSuccess() {
-                Utils.showShortToast(MainActivity.this, R.string.main_toast_searching);
+                MyUtil.showShortToast(MainActivity.this, R.string.main_toast_searching);
             }
 
             @Override
             public void onFailure(int reason) {
                 setFailureReasonForDiscover(reason);
             }
-
         });
-
     }
 
     private void startPlaybackActivity() {
@@ -455,9 +450,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
         startActivity(intent);
     }
 
-    /**
-     * 재생액티비티 시작 메소드
-     */
+    //TODO 리팩토링 필요
     private void sendStartMessage() {
 
         if (isGroupOwner == false) {
@@ -495,6 +488,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
         setPeerList(peers);
     }
 
+    //TODO 연결 후 해제시 제대로 초기화가 안됨
     @Override
     public void onConnectionInfoAvailable(WifiP2pInfo info) {
         setWiFiP2pInfo(info);
@@ -506,7 +500,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
                 startServerThread();
             }
 
-            Utils.showShortToast(MainActivity.this, R.string.main_toast_group_owner);
+            MyUtil.showShortToast(MainActivity.this, R.string.main_toast_group_owner);
 
             setHintText(R.string.main_hint_grouped);
 
@@ -515,7 +509,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
                 startClientThread();
             }
 
-            Utils.showShortToast(MainActivity.this, R.string.main_toast_group_member);
+            MyUtil.showShortToast(MainActivity.this, R.string.main_toast_group_member);
 
             setHintText(R.string.main_hint_grouped);
 
@@ -561,7 +555,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
             Socket socket = null;
 
             try {
-                socket = Utils.initSocket(serverSocket.accept());
+                socket = MyUtil.initSocket(serverSocket.accept());
                 serverSocket.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -574,7 +568,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
                 @Override
                 public void run() {
 
-                    Utils.showShortToast(MainActivity.this, R.string.main_toast_connected_server);
+                    MyUtil.showShortToast(MainActivity.this, R.string.main_toast_connected_server);
 
                     setHintText(R.string.main_hint_connected_server);
 
@@ -593,7 +587,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
         @Override
         public void run() {
 
-            Socket socket = Utils.makeConnectedSocket(
+            Socket socket = MyUtil.makeConnectedSocket(
                     mInfo.groupOwnerAddress.getHostAddress(), 8920);
 
             instructionSocket.addSocket(socket);
@@ -603,7 +597,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
                 @Override
                 public void run() {
 
-                    Utils.showShortToast(MainActivity.this, R.string.main_toast_connected_client);
+                    MyUtil.showShortToast(MainActivity.this, R.string.main_toast_connected_client);
 
                     setHintText(R.string.main_hint_connected_client);
 
@@ -674,18 +668,5 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
             }
         }).start();
 
-    }
-
-    //TODO
-    private void initCatImageView(int screenWidth) {
-        int px = screenWidth / 2;
-
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(px, px);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-
-        ImageView imageView = (ImageView) findViewById(R.id.main_cats);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        imageView.setLayoutParams(layoutParams);
     }
 }

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.withs.listentogether.R;
-import com.withs.listentogether.Utils;
+import com.withs.listentogether.MyUtil;
 
 import java.util.List;
 
@@ -26,7 +26,6 @@ public class WiFiPeerListAdapter extends ArrayAdapter<WifiP2pDevice> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-
 		View v = convertView;
 
 		if (v == null) {
@@ -34,22 +33,18 @@ public class WiFiPeerListAdapter extends ArrayAdapter<WifiP2pDevice> {
 					Context.LAYOUT_INFLATER_SERVICE);
 			 v = vi.inflate(R.layout.row_devices, parent, false);
 		}
+
 		WifiP2pDevice device = items.get(position);
+
 		if (device != null) {
 			TextView top = (TextView) v.findViewById(R.id.device_name);
 			TextView bottom = (TextView) v.findViewById(R.id.device_details);
-            ImageView icon = (ImageView) v.findViewById(R.id.icon);
 			if (top != null) {
 				top.setText(device.deviceName);
 			}
 			if (bottom != null) {
-				bottom.setText(Utils.getDeviceStatus(device.status));
+				bottom.setText(MyUtil.getDeviceStatus(device.status));
 			}
-            //TODO single icon 변경
-            if (icon != null) {
-//                Utils.setSingleIcon(icon);
-                icon.setImageResource(R.drawable.single2);
-            }
 		}
 
 		return v;

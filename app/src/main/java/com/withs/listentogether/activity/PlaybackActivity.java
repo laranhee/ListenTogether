@@ -43,7 +43,7 @@ import android.widget.Toast;
 //import com.listentogether.MusicInfo;
 //import com.listentogether.Playlist;
 //import com.listentogether.R;
-//import com.listentogether.Utils;
+//import com.listentogether.MyUtil;
 //import com.listentogether.adapter.PlaylistAdapter;
 //import com.listentogether.receiver.PlaybackReceiver;
 //import com.listentogether.service.PlaybackService;
@@ -52,7 +52,7 @@ import com.withs.listentogether.InstructionSocket;
 import com.withs.listentogether.MusicInfo;
 import com.withs.listentogether.Playlist;
 import com.withs.listentogether.R;
-import com.withs.listentogether.Utils;
+import com.withs.listentogether.MyUtil;
 import com.withs.listentogether.adapter.PlaylistAdapter;
 import com.withs.listentogether.receiver.PlaybackReceiver;
 import com.withs.listentogether.service.PlaybackService;
@@ -110,7 +110,7 @@ public class PlaybackActivity extends Activity {
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			mService = new Messenger(service);
-			Utils.sendMessage(mService, PlaybackService.MSG_CONNECTED,
+			MyUtil.sendMessage(mService, PlaybackService.MSG_CONNECTED,
                     mMessenger);
 		}
 
@@ -184,7 +184,7 @@ public class PlaybackActivity extends Activity {
 		//TODO
 		// 고양이 배경 갱신
 //		int screenWidth = getScreenWidthPixels();
-		int screenWidth = Utils.getScreenWidthPixels(this);
+		int screenWidth = MyUtil.getScreenWidthPixels(this);
 		initCatImageView(screenWidth);
 		
 		//TODO 도움말 레이아웃 사이즈갱신
@@ -299,13 +299,13 @@ public class PlaybackActivity extends Activity {
 	
 		if (isGroupOwner == true) {
 			addMusicToPlaylist(musicInfo);
-			Utils.sendMessage(mService,
-					PlaybackService.MSG_START_SEND_MUSIC_OBJECT, musicInfo);
-			Utils.sendMessage(mService,
-					PlaybackService.MSG_UPDATE_NOTIFICATION_INFO);
+			MyUtil.sendMessage(mService,
+                    PlaybackService.MSG_START_SEND_MUSIC_OBJECT, musicInfo);
+			MyUtil.sendMessage(mService,
+                    PlaybackService.MSG_UPDATE_NOTIFICATION_INFO);
 		} else {
-			Utils.sendMessage(mService,
-					PlaybackService.MSG_START_SEND_MUSIC_OBJECT, musicInfo);
+			MyUtil.sendMessage(mService,
+                    PlaybackService.MSG_START_SEND_MUSIC_OBJECT, musicInfo);
 		}
 	}
 

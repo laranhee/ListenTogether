@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.withs.listentogether.R;
-import com.withs.listentogether.Utils;
+import com.withs.listentogether.MyUtil;
 import com.withs.listentogether.activity.MainActivity;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public class WiFiGroupListAdapter extends ArrayAdapter<WifiP2pDevice> {
 				top.setText(device.deviceName);
 			}
 			if (bottom != null) {
-				bottom.setText(Utils.getDeviceStatus(device.status));
+				bottom.setText(MyUtil.getDeviceStatus(device.status));
 			}
 			if (device.deviceAddress == mActivity.ownerDeviceAddress) {
 				bottom.setText("GROUP OWNER");
