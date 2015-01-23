@@ -50,7 +50,7 @@ import java.util.ArrayList;
 //TODO 쓰레드 관련 리팩토링 필요
 //TODO onCreate() 리팩토링 필요
 //TODO 리스트뷰 및 리스트어댑터 리팩토링 필요
-public class MainActivity extends Activity implements WifiP2pManager.PeerListListener, WifiP2pManager.ConnectionInfoListener {
+public class MainActivity extends Activity implements WifiP2pManager.PeerListListener {
 
     private static final String TAG = "MainActivity";
 
@@ -196,17 +196,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //TODO
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-
         switch (id) {
-            //TODO 스타트 액션버튼 없애야함
-            case R.id.action_start:
-                sendStartMessage();
-                break;
             case R.id.action_discover:
                 discoverPeers();
                 break;
@@ -217,20 +207,14 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // TODO 시작버튼 대체하기
+    public void showStartButton() {
         if (isGroupOwner == true) {
             findViewById(R.id.main_button_start).setVisibility(View.VISIBLE);
-//			menu.findItem(R.id.action_start).setVisible(true);
         } else {
-//			menu.findItem(R.id.action_start).setVisible(false);
             findViewById(R.id.main_button_start).setVisibility(View.GONE);
         }
-        return super.onPrepareOptionsMenu(menu);
     }
 
-    //TODO UI초기화 메소드
     private void initUI() {
         int screenWidth = MyUtil.getScreenWidthPixels(this);
         int halfWidth = screenWidth * 8 / 16;
@@ -248,7 +232,6 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
         findViewById(R.id.main_cats).setLayoutParams(layoutParams2);
     }
 
-    //TODO 재생액티비티 넘어가기
     public void startPlaybackActivity(View view) {
         sendStartMessage();
     }
@@ -488,55 +471,6 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
         setPeerList(peers);
     }
 
-    //TODO 연결 후 해제시 제대로 초기화가 안됨
-    @Override
-    public void onConnectionInfoAvailable(WifiP2pInfo info) {
-        setWiFiP2pInfo(info);
-
-        if (info.groupFormed && info.isGroupOwner) {
-            setIsGroupOwner(true);
-
-            if (serverThread == null) {
-                startServerThread();
-            }
-
-            MyUtil.showShortToast(MainActivity.this, R.string.main_toast_group_owner);
-
-            setHintText(R.string.main_hint_grouped);
-
-        } else if (info.groupFormed) {
-            if (clientThread == null) {
-                startClientThread();
-            }
-
-            MyUtil.showShortToast(MainActivity.this, R.string.main_toast_group_member);
-
-            setHintText(R.string.main_hint_grouped);
-
-        } else if (info.groupFormed == false) {
-            setIsGroupOwner(false);
-
-            if (serverThread != null) {
-                serverThread.interrupt();
-                serverThread = null;
-            }
-
-            if (clientThread != null) {
-                clientThread.interrupt();
-                clientThread = null;
-            }
-
-            instructionSocket.close();
-
-            invalidateOptionsMenu();
-
-            setHintText(R.string.main_hint_start);
-
-        }
-
-        setGroupStatus();
-    }
-
     private class ServerThread implements Runnable {
 
         @Override
@@ -572,7 +506,7 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
 
                     setHintText(R.string.main_hint_connected_server);
 
-                    invalidateOptionsMenu();
+                    showStartButton();
 
                 }
 

@@ -57,12 +57,9 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
             });*/
 
             //TODO
-//            mManager.requestConnectionInfo(mChannel, mActivity);
-
-            //TODO
             WifiP2pInfo info = intent.getParcelableExtra(WifiP2pManager.EXTRA_WIFI_P2P_INFO);
             testInfo(info);
-            intent.getParcelableExtra(WifiP2pManager.EXTRA_P2P_DEVICE_LIST);
+//            intent.getParcelableExtra(WifiP2pManager.EXTRA_P2P_DEVICE_LIST);
 
 		} else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION
 				.equals(action)) {
@@ -116,7 +113,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
             mActivity.instructionSocket.close();
 
-            mActivity.invalidateOptionsMenu();
+            mActivity.showStartButton();
 
             mActivity.setHintText(R.string.main_hint_start);
 
