@@ -59,7 +59,7 @@ public class MyUtil {
 
 			@Override
 			public void onFailure(int reason) {
-				Log.d("clearWifiP2pConnection", "error : " + reason);
+				//Log.d("clearWifiP2pConnection", "error : " + reason);
 			}
 		};
 

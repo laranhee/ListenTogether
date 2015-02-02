@@ -206,7 +206,7 @@ public class PlaybackService extends Service {
 			mInstructionSocket.getListCustomSockets().get(0)
 					.getDataOutputStream().writeBytes("quit\r\n");
 		} catch (IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 
 		// WakeLock 해제
@@ -239,13 +239,13 @@ public class PlaybackService extends Service {
 			try {
 				serverSocket = new ServerSocket(8930);
 			} catch (IOException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 
 			try {
 				serverSocket.setReuseAddress(true);
 			} catch (SocketException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 
 			try {
@@ -254,7 +254,7 @@ public class PlaybackService extends Service {
 						PlaylistSocket.SERVER);
 				serverSocket.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 
 			while (true) {
@@ -406,7 +406,7 @@ public class PlaybackService extends Service {
 
 			socket.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 
@@ -448,7 +448,7 @@ public class PlaybackService extends Service {
 
 			socket.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 
@@ -466,7 +466,7 @@ public class PlaybackService extends Service {
 				mPlaylistSocket.getListCustomSockets().get(0)
 						.getObjectOutputStream().writeObject(mAddedMusic);
 			} catch (IOException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 
@@ -480,11 +480,11 @@ public class PlaybackService extends Service {
 			musicInfo = (MusicInfo) mPlaylistSocket.getListCustomSockets()
 					.get(0).getObjectInputStream().readObject();
 		} catch (OptionalDataException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 
 		if (mWakeLock.isHeld()) {
@@ -513,7 +513,7 @@ public class PlaybackService extends Service {
 					instruction = mInstructionSocket.getListCustomSockets()
 							.get(0).getBufferedReader().readLine();
 				} catch (IOException e) {
-					e.printStackTrace();
+//					e.printStackTrace();
 				}
 
 				if (instruction.equals("quit")) {
