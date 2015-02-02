@@ -589,7 +589,8 @@ public class MainActivity extends Activity implements WifiP2pManager.PeerListLis
                         @Override
                         public void run() {
                             TextView tv = (TextView) findViewById(R.id.main_text_count);
-                            tv.setText("Listen Together를 통해 " + result + "곡이 공유됐습니다.");
+//                            tv.setText("Listen Together를 통해 " + result + "곡이 공유됐습니다.");
+                            tv.setText(R.string.main_count_one + result + R.string.main_count_two);
                         }
                     });
 

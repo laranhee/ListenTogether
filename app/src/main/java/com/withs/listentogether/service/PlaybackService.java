@@ -1,6 +1,5 @@
 package com.withs.listentogether.service;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -24,6 +23,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.support.v4.app.NotificationCompat;
 
 import com.withs.listentogether.InstructionSocket;
 import com.withs.listentogether.MusicInfo;
@@ -105,7 +105,7 @@ public class PlaybackService extends Service {
 
 	private MediaPlayer mMediaPlayer;
 
-	private Notification.Builder mBuilder;
+    private NotificationCompat.Builder mBuilder;
 	private NotificationManager mNotificationManager;
 
 	private WakeLock mWakeLock;
@@ -570,10 +570,10 @@ public class PlaybackService extends Service {
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
 				intent, 0);
 
-		mBuilder = new Notification.Builder(this)
-				.setContentIntent(pendingIntent)
-				.setSmallIcon(R.drawable.ic_launcher).setContentText("")
-				.setContentTitle("");
+        mBuilder = new NotificationCompat.Builder(this)
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_launcher).setContentText("")
+                .setContentTitle("");
 
 		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 

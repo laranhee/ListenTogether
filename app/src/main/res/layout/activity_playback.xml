@@ -39,17 +39,12 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:alpha="0.8"
-            android:text="@string/playback_instruction_01"
-            android:textColor="#FFFFFF" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:alpha="0.8"
-            android:text="@string/playback_instruction_02"
-            android:textColor="#FFFFFF" />
+            android:text="@string/playback_instruction"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:layout_gravity="center_vertical" />
     </LinearLayout>
 
 </FrameLayout>

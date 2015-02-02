@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- actionbar -->
+    <string name="playback_actionbar_title">Listen Together</string>
+    <string name="playback_actionbar_subtitle">음악을 추가해주세요</string>
+    <string name="playback_action_add">곡추가</string>
+    <string name="playback_action_help">도움말</string>
+    <string name="playback_action_quit">종료</string>
+    <!-- notification -->
+    <string name="notification_title">Listen Together</string>
+    <string name="notification_text">음악을 추가해주세요</string>
+    <string name="notification_info"> 곡 대기중</string>
+    <!-- toast -->
+    <string name="playback_toast_quit">한 번 더 누르면 종료됩니다\n상대방도 같이 종료됩니다</string>
+    <!-- help -->
+    <string name="playback_instruction_01">주의 : 이 앱은 완벽한 동시 재생을 제공하지 않습니다.</string>
+    <string name="playback_instruction_02">1. 각자의 디바이스에 이어폰을 연결해 양 귀에 착용합니다.\n2. 곡추가를 눌러 같이 듣고 싶은 음악을 추가합니다.\n3. 서로의 음악을 감상합니다.\n4. 조금 멀리 떨어져 있어도 상관없습니다.</string>
+    <string name="playback_instruction">주의 : 이 앱은 완벽한 동시 재생을 제공하지 않습니다.\n1. 각자의 디바이스에 이어폰을 연결해 양 귀에 착용합니다.\n2. 곡추가를 눌러 같이 듣고 싶은 음악을 추가합니다.\n3. 서로의 음악을 감상합니다.\n4. 조금 멀리 떨어져 있어도 상관없습니다.</string>
+    <!-- etc -->
+    <string name="playback_cats_cd">cats</string>
+    <string name="playlist_albumart_cd">albumart</string>
+
+</resources>

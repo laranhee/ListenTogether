@@ -2,38 +2,39 @@
 <resources>
 
     <!-- actionbar -->
-    <string name="main_action_start">재생모드시작</string>
-    <string name="main_action_discover">기기검색</string>
+    <string name="main_action_start">Start</string>
+    <string name="main_action_discover">DISCOVER</string>
     <!-- dialog -->
-    <string name="main_dialog_title">Wi-Fi Direct를 켜주세요</string>
-    <string name="main_dialog_message">Wi-Fi Direct는 AP 접속 유무에 상관없이, Wi-Fi가 켜져있기만 해도 자동으로 이용 가능합니다.\n\n
-        일부 Wi-Fi Direct를 지원하는 오래된 기기는 Wi-Fi Direct를 따로 작동시켜야 동작합니다.\n\n
-        Wi-Fi가 켜지는 동안 이 다이얼로그가 나타날 수 있으나, 계속해서 나타난다면 환경설정에서 Wi-Fi Direct를 찾아 켜주세요.</string>
-    <string name="main_dialog_positive">Wi-Fi 켜기</string>
-    <string name="main_dialog_neutral">환경설정</string>
-    <string name="main_dialog_negative">닫기</string>
+    <string name="main_dialog_title">turn on Wi-Fi Direct</string>
+    <string name="main_dialog_message">Wi-Fi Direct is available when Wi-Fi is turned on without whether device is connecting AP.\n\nSome devices which support Wi-Fi Direct have to turn on Wi-Fi Direct separately.\n\nThis dialog may appear again while turning on Wi-Fi. If this dialog appear repeatedly,\n1. Go to Settings\n2. Find Wi-Fi Direct\n3. Turn on Wi-Fi Direct</string>
+    <string name="main_dialog_positive">Turn on Wi-Fi</string>
+    <string name="main_dialog_neutral">Settings</string>
+    <string name="main_dialog_negative">Close</string>
     <!-- toast -->
-    <string name="main_toast_searching">검색 중</string>
-    <string name="main_toast_requesting">요청 중</string>
-    <string name="main_toast_group_owner">그룹오너가 됐습니다\n연결이 완료 될 때까지 기다려주세요</string>
-    <string name="main_toast_group_member">그룹멤버가 됐습니다\n연결이 완료 될 때까지 기다려주세요</string>
-    <string name="main_toast_connected_server">연결 완료\n재생모드시작을 눌러주세요</string>
-    <string name="main_toast_connected_client">연결 완료\n그룹오너가 재생모드시작을 눌러야 합니다</string>
+    <string name="main_toast_searching">Searching</string>
+    <string name="main_toast_requesting">Requesting</string>
+    <string name="main_toast_group_owner">This device is group owner.\nWaiting for completing connect.</string>
+    <string name="main_toast_group_member">This device is group member.\nWaiting for completing connect.</string>
+    <string name="main_toast_connected_server">Complete connect.\nClick START button.</string>
+    <string name="main_toast_connected_client">Complete connect.\nGroup owner has to click START button.</string>
     <!-- button -->
-    <string name="main_button_start">시작</string>
+    <string name="main_button_start">START</string>
     <!-- hint -->
-    <string name="main_hint_start">그룹을 형성해야 시작할 수 있습니다.\n기기검색을 눌러 연결 가능한 기기를 찾아 연결해 주세요.</string>
-    <string name="main_hint_grouped">그룹이 형성됐습니다. 연결 중입니다.</string>
-    <string name="main_hint_connected_server">그룹오너가 됐습니다.\n재생모드시작을 눌러주세요.</string>
-    <string name="main_hint_connected_client">그룹멤버가 됐습니다.\n그룹오너가 재생모드시작을 눌러야 합니다.</string>
+    <string name="main_hint_start">Need Wi-Fi Direct group to start.\nClick DISCOVER to find other devices and connect them.</string>
+    <string name="main_hint_grouped">Group formed. Now connecting.</string>
+    <string name="main_hint_connected_server">This device is group owner.\nClick START button.</string>
+    <string name="main_hint_connected_client">This device is group member.\nGroup owner has to click START button.</string>
     <!-- TextView -->
-    <string name="main_text_my_device">내 기기</string>
-    <string name="main_text_connected_device">연결 된 기기</string>
-    <string name="main_text_abailable_device">연결 가능한 기기</string>
+    <string name="main_text_my_device">My device</string>
+    <string name="main_text_connected_device">Connected device</string>
+    <string name="main_text_abailable_device">Available device</string>
     <!-- etc -->
-    <string name="main_failure_reason_busy">BUSY - 잠시 후 다시 시도해 주세요</string>
-    <string name="main_failure_reason_error">ERROR - 기기 검색을 할 수 없습니다</string>
-    <string name="main_failure_reason_p2p_unsupported">P2P_UNSUPPORTED - 기기가 Wi-Fi Direct를 지원하지 않습니다</string>
+    <string name="main_failure_reason_busy">BUSY - Try again after a while</string>
+    <string name="main_failure_reason_error">ERROR - Can\'t search devices</string>
+    <string name="main_failure_reason_p2p_unsupported">P2P_UNSUPPORTED - This device doesn\'t support Wi-Fi Direct</string>
     <string name="main_main_image_cd">main image</string>
+
+    <string name="main_count_one">With Listen Together, </string>
+    <string name="main_count_two">music has played.</string>
 
 </resources>
